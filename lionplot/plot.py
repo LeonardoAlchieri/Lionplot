@@ -1,4 +1,3 @@
-from ast import literal_eval
 import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.lines import Line2D
@@ -20,21 +19,21 @@ def lionplot(
     elinewidth: int = 30,
     markersize: int = 10,
 ) -> None:
-    
+
     x = np.asarray(x)
     y = np.asarray(y)
     yerr = np.asarray(yerr)
-    
+    hue_values = np.asarray(hue_values) if hue_values is not None else np.array([])
+
     # TODO: handle arbitrary length of hue_values
     colors: list[tuple[float, float, float]] = [mcolors.to_rgb(color) for color in plt.rcParams['axes.prop_cycle'].by_key()['color']]
-
 
     unique_category_vals = np.unique(hue_values)
     for i, category_val in enumerate(unique_category_vals):
         subset_x = x[hue_values == category_val]
         subset_y = y[hue_values == category_val]
         subset_yerr = yerr[hue_values == category_val]
-        
+
         ax.errorbar(
             x=subset_x,
             y=subset_y,
